@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn import metrics
 
 df_data_train = pd.read_csv('train.csv', header=0)
 #df_data_test = pd.read_csv('test.csv', header=0)
@@ -69,12 +70,13 @@ y_train = df_y_train.values
 
 X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, random_state=10, test_size=0.3)
 
-
-clf = RandomForestClassifier(max_depth=2, random_state=0)
+# Hacer un For para que vaya tomando distintos valores en max_depth.
+clf = RandomForestClassifier(max_depth=3, random_state=0)
 clf.fit(X_train, y_train.ravel())
 
 y_hat = clf.predict(X_test)
 
-print(y_hat)
+#print(y_hat)
 print(accuracy_score(y_true = y_test, y_pred = y_hat))
+print(metrics.classification_report(y_test, y_hat, target_names=["PassengerId","Survived"]))
 
